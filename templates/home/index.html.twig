@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestionnaire de Candidatures{% endblock %}
+
+{% block body %}
+    <div class="flex-column">
+        <div class="homepage-welcome">
+            <h3 class="text-shadow font-weight-bold text-center">Bienvenue sur ce gestionnaire de candidatures</h3>
+        </div>
+
+        <div>
+            <p>- Sauvegarde et gestion de vos candidatures.</p>
+            <p>- Notification pour relancer (ou non) vos candidatures restées sans réponse.</p>
+            <p>- Choix du timing: après X jours sans réponse.</p>
+            <p>- Après vous êtes inscrit et connecté, dans votre espace personnel, modification possible du délai de rappel de relance. <br> Par défaut, le délai de rappel est de 15 jours. <br> Si tel est le cas, un visuel sera rendu disponible dans votre "Tableau de bord".</p>
+        </div>
+
+        
+        {% if app.user %}
+        <div class="d-flex mt-5">
+            <a class="m-auto" href="{{ path('dashbord') }}">Accès à mon tableau de bord</a>
+        </div>
+        {% endif %}
+
+        {% if not app.user %}
+        <div class="d-flex mt-5">
+            <a class="m-auto" href="{{ path('app_inscription') }}">Inscription</a>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

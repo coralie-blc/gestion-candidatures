@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+
+    <div class="register-form">
+        <h4 class="text-shadow">Inscription.</h4>
+
+    <a href="{{ path('app_login') }}">Se connecter</a>
+
+  <form action="{{ path('app_inscription') }}" method="post" class="row justify-content-center mt-5">
+    {{ form_start(registerForm)}}
+
+    <div class="col-md-8">
+        {{ form_widget(registerForm.email) }}
+        {{ form_help(registerForm.email) }}
+    </div>
+    <div class="col-md-8">
+        {{ form_widget(registerForm.password.first) }}
+        {{ form_help(registerForm.password.first) }}
+        {{ form_errors(registerForm.password.first) }}
+
+        {{ form_widget(registerForm.password.second) }}
+        {{ form_help(registerForm.password.second) }}
+        {{ form_errors(registerForm.password.second) }}
+
+    </div>
+    <div class="col-md-8">
+    {{ form_widget(registerForm.firstName) }}
+    {{ form_help(registerForm.firstName) }}
+    </div>
+    <div class="col-md-8">
+    {{ form_widget(registerForm.lastName) }}
+    {{ form_help(registerForm.lastName) }}
+    </div>
+    <div class="col-md-8">
+    {{ form_widget(registerForm.zipCode) }}
+    {{ form_help(registerForm.zipCode) }}
+    {{ form_errors(registerForm.zipCode) }}
+
+    </div>
+    <div class="col-md-8">
+    {{ form_widget(registerForm.city) }}
+    {{ form_help(registerForm.city) }}
+    </div>
+
+    <div class="d-flex justify-content-center col-md-8"> 
+        <button type="submit" id="btn-add-review" class="btn btn-outline-success">Inscription</button>
+    </div>
+    {{ form_end(registerForm)}}
+</form>
+    </div>
+{% endblock %}

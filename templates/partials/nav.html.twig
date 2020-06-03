@@ -1,0 +1,19 @@
+<nav>
+    <ul class="navigation">
+        <li><a href="{{ path('home') }}">Accueil</a></li>
+        {% if not app.user %}
+        <li><a href="{{ path('app_inscription') }}">Inscription</a></li>
+        <li><a href="{{ path('app_login') }}">Se connecter</a></li>
+        {% endif %}
+        {% if app.user %}
+        <li><a href="{{ path('dashbord') }}">Tableau de bord</a></li>
+        {% if app.user %}
+        <li>
+            <a href="{{ path('app_account') }}">{{ app.user.firstName }} - {{ app.user.lastName }} - <img src="{{ asset('images/on.png') }}" alt="online icon" class="nav-icon d-inline"></a>
+            <p><a class="nav-p small" href="{{ path('app_logout') }}">Déconnexion  - <img src="{{ asset('images/off.png') }}" alt="offline icon" class="nav-icon"></a></p>
+        </li>
+        {% endif %}
+        {% endif %}
+
+    </ul>
+</nav>

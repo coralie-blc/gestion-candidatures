@@ -1,0 +1,206 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+#footer {
+  margin-top: 5em;
+  min-width:100vh;
+  background-color: lightcoral;
+  justify-self: end;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-anchors {
+  list-style: none;
+  padding-inline-start: 0!important;
+  text-align: center;
+  flex-grow:1;
+}
+
+
+.homepage-welcome {
+  margin: 5em auto;
+}
+
+.homepage-welcome > p {
+  text-align: center;
+}
+
+.text-shadow{
+  text-shadow: 0 0 1px black;
+  color: #444;
+}
+
+.nav-p {
+  margin-block-end: 0!important;
+}
+
+.nav-icon {
+  width: 15%;
+}
+
+.form-edit-icon {
+  width: 35%;
+}
+
+.checked {
+    max-width: 2.5em;
+}
+
+.candidature-off {
+    background-color: rgb(250, 37, 37)!important;
+    opacity: 0.7;
+}
+
+.table {
+  width: 130%!important;
+}
+
+.table > tbody > tr > td,
+.table > tbody > tr > th {
+    vertical-align: middle;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+.navigation > li {
+    list-style: none!important;
+    padding: 0.5em 2em;
+}
+
+.navigation > li > a,
+.navigation > li > p > a {
+  color: inherit;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    width: 50%;
+}
+
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-block-end: 10em;
+}
+
+
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+    background-color: rgb(253, 225, 97);
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    text-align: center;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    margin: auto;
+    margin-top: 3em;
+    width: 75%;
+  }
+  
+  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+  .active, .accordion:hover {
+    background-color: rgb(253, 204, 97);
+  }
+  
+  /* Style the accordion panel. Note: hidden by default */
+  .panel {
+    padding: 3em 0em;
+    background-color: rgb(253, 225, 97);
+    display: none;
+    overflow: hidden;
+    text-align: center;
+    width: 75%;
+  }
+
+
+  .accordion:after {
+    content: '\25bc'; /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: #777;
+    float: right;
+    margin-left: 5px;
+  }
+  
+  .active:after {
+    content: "\25b2"; /* Unicode character for "minus" sign (-) */
+  }
+
+/* .form-group > input,
+.form-group > textarea,
+.form-group > select {
+  text-align: center;
+  width: inherit;
+} */
+
+.form-group > input {
+  width: 70%;
+}
+
+.col-form-label {
+  font-size: .7em;
+  padding-top: 10px;
+  width: 3em;
+}
+
+.form-group {
+  margin-bottom: .6em!important;
+}
+
+.form-text {
+  text-align: right;
+}
+
+.form-control {
+  text-align: center;
+  color: grey;
+}
+
+.table-head {
+  font-size: .8em;
+  text-align: center;
+}
+
+.negative-answer {
+  width: 5em;
+}
+
+.alert-success {
+  display: flex;
+}
+
+.flash-success {
+  margin: auto;
+}
+
+.edit-form {
+    padding: 3em 0em;
+    background-color: rgb(253, 225, 97);
+    text-align: center;
+    width: 75%;
+}
+
+.register-form {
+  padding: 3em 0em;
+  background-color: rgb(253, 225, 97);
+  text-align: center;
+  width: 75%;
+}
+
+small {
+  width: 70%;
+}
+
+.to-relance {
+  max-width: 2.5em;
+  border: 1px green solid;
+}
+

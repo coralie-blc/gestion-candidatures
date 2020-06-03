@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashbord{% endblock %}
+
+{% block body %}
+  <div class="edit-form">
+    <h4 class="text-shadow">Edition d'une candidature.</h4>
+      <form action="{{ path('candidature_edit', {'candidature' : candidature.id}) }}" method="post" class="row justify-content-center mt-5">
+        <input type="hidden" name="candidature_id" value="{{ candidature.id }}">
+        <input type="hidden" name="token" value="{{ csrf_token('archive-candidature') }}"/>
+
+        {{ form_start(CandidatureEdit)}}
+
+        <div class="col-sm-8">
+        {{ form_widget(CandidatureEdit.date) }}
+        {{ form_help(CandidatureEdit.date) }}
+        </div>
+
+        <div class="col-md-8">
+          {{ form_widget(CandidatureEdit.poste) }}
+          {{ form_help(CandidatureEdit.poste) }}
+        </div>
+
+        <div class="col-md-8">
+          {{ form_widget(CandidatureEdit.contactName) }}
+          {{ form_help(CandidatureEdit.contactName) }}
+        </div>
+
+        <div class="col-md-8">
+          {{ form_widget(CandidatureEdit.contact) }}
+          {{ form_help(CandidatureEdit.contact) }}
+        </div>
+
+        <div class="col-md-8">
+          {{ form_widget(CandidatureEdit.ville) }}
+          {{ form_help(CandidatureEdit.ville) }}
+        </div>
+
+        <div class="col-md-8">
+          {{ form_widget(CandidatureEdit.entreprise) }}
+          {{ form_help(CandidatureEdit.entreprise) }}
+        </div>
+
+        <div class="col-md-8">
+          {{ form_widget(CandidatureEdit.notes) }}
+          {{ form_help(CandidatureEdit.notes) }}
+        </div>
+
+        <div class="d-flex justify-content-center col-md-8"> 
+          <button type="submit" id="btn-add-review" class="btn btn-outline-success">Modifier !</button>
+        </div>
+
+      {{ form_end(CandidatureEdit)}}
+    </form>
+  </div>
+{% endblock %}

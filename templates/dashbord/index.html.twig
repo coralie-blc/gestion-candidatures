@@ -1,0 +1,150 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashbord{% endblock %}
+
+{% block body %}
+
+{% set relance = relanceDays %}
+
+
+
+  <button class="accordion">Ajouter une candidature.</button>
+  <div class="panel">
+    <form class="row justify-content-center" action="{{ path('dashbord') }}" method="post" >
+      {{ form_start(candidatureForm)}}
+      <div class="col-md-8">
+        {{ form_widget(candidatureForm.date) }}
+        {{ form_help(candidatureForm.date) }}
+      </div>
+      <div class="col-md-8">
+        {{ form_widget(candidatureForm.poste) }}
+        {{ form_help(candidatureForm.poste) }}
+      </div>
+      <div class="col-md-8">
+        {{ form_widget(candidatureForm.contactName) }}
+        {{ form_help(candidatureForm.contactName) }}
+      </div>
+      <div class="col-md-8">
+        {{ form_widget(candidatureForm.contact) }}
+        {{ form_help(candidatureForm.contact) }}
+      </div>
+      <div class="col-md-8">
+        {{ form_widget(candidatureForm.ville) }}
+        {{ form_help(candidatureForm.ville) }}
+      </div>
+      <div class="col-md-8">
+        {{ form_widget(candidatureForm.entreprise) }}
+        {{ form_help(candidatureForm.entreprise) }}
+      </div>
+      <div class="col-md-8">
+        {{ form_widget(candidatureForm.notes) }}
+        {{ form_help(candidatureForm.notes) }}
+      </div>
+
+      <div class="d-flex justify-content-center col-md-8"> 
+        <button type="submit" id="btn-add-review" class="btn btn-outline-success">Envoyer!</button>
+      </div>
+
+      {{ form_end(candidatureForm)}}
+    </form>
+  </div>
+
+
+  <table class="table table-striped table-hover mt-5" id="tableau-bord" data-toggle="table">
+    <thead>
+      <tr class="table-head">
+        <th scope="col">#</th>
+        <th data-field="notes" scope="col" class="negative-answer">Réponse négative</th>
+        <th data-field="date" scope="col">Date</th>
+        <th data-field="relance" scope="col">Relance</th>
+        <th scope="col">Poste</th>
+        <th scope="col">@ / 06</th>
+        <th scope="col">Contact</th>
+        <th data-field="entreprise" scope="col">Entreprise</th>
+        <th data-field="ville" scope="col">Ville</th>
+        <th data-field="notes" scope="col">Notes perso</th>
+        <th data-field="edit" scole="col">Editer</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for candidature in candidatures|sort((a, b) => a.status <=> b.status) %}
+        <tr 
+        {% if candidature.status is same as (3) %}
+          class="candidature-off"
+        {% endif %}
+        >
+          <th scope="row">{{ candidature.id }}</th>
+          <td>
+            <form action="{{ path('candidature_archive', {'candidature' : candidature.id}) }}" method="post" class="row">
+              <input type="hidden" name="candidature_id" value="{{ candidature.id }}">
+              <input type="hidden" name="token" value="{{ csrf_token('archive-candidature') }}"/>
+              {% if candidature.status is same as (3) %}
+                <button class="btn mx-auto" type="submit" style="background-color:transparent">
+                  X
+                </button>                    
+              {% else %}
+              <button class="btn mx-auto" type="submit" style="background-color:transparent">
+                <img src="{{ asset('images/delete.png') }}" alt="Archived!" class="checked" />
+              </button>   
+              {% endif %}                 
+            </form>
+          </td>
+          <td>{{candidature.date|date('d/m/Y')}}</td>
+          <td>
+            <form action="{{ path('candidature_relance', {'candidature' : candidature.id}) }}" method="post" class="row">
+              <input type="hidden" name="candidature_id" value="{{ candidature.id }}">
+              <input type="hidden" name="token" value="{{ csrf_token('relance-candidature') }}"/>
+              <button class="btn m-auto mx-auto" type="submit" style="background-color:transparent">
+                {# Si relance faite, status = 1 #}
+                {% if candidature.relance is same as(true) %}
+                  <img src="{{ asset('images/correct.png') }}" alt="Checked!" class="checked"/>
+                {# Si relance non faite, candidature non rejetée ET date supérieure à 10 jours #}
+                {% elseif (date(candidature.date) < date('-'~relance~'days', 'Europe/Paris') and (candidature.relance is same as (false)) and (candidature.status is not same as (3))) %}
+                  <img src="{{ asset('images/uncorrect.png') }}" alt="unchecked!" class="to-relance"/>
+                {# Si pas de relance, status = 0 #}
+                {% else %}
+                  <img src="{{ asset('images/uncorrect.png') }}" alt="unchecked!" class="checked"/>
+                {% endif %}
+              </button>                   
+            </form>
+          </td>
+          <td>{{candidature.poste}}</td>
+          <td>{{candidature.contact}}</td>
+          <td>{{candidature.contactName}}</td>
+          <td>{{candidature.entreprise}}</td>
+          <td>{{candidature.ville}}</td>
+          <td>{{ candidature.notes}}</td>
+          <td>
+            <a href="{{ path('candidature_edit', {'candidature' : candidature.id}) }}">
+              <img src="{{ asset('images/edit.png') }}" alt="edit icon" class="form-edit-icon">
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+  <div class="legende">
+    <small>Légende:
+      <ul>
+        <li>
+          <img src="{{ asset('images/correct.png') }}" alt="Checked!" class="checked"/> : relance faite.
+        </li>
+        <li>
+          <img src="{{ asset('images/uncorrect.png') }}" alt="unchecked!" class="to-relance"/> : relance à faire.
+        </li>
+        <li>
+          <img src="{{ asset('images/uncorrect.png') }}" alt="unchecked!" class="checked"/> : relance faite.
+        </li>
+      </ul>
+    </small>
+  </div>
+  {# Status #}
+  {# 0 = de base, en cours. #}
+  {# 1 = relance faite #}
+  {# 2 = réponse négative #}
+  {# 3 = après X jours, archivé, sans réponse #}
+  {# 5 = supprimé #}
+{% endblock %}
