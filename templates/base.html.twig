@@ -18,7 +18,7 @@
     <div class="container">
         {% for messageType, messageList in app.flashes %}
             {% for message in messageList %}
-                <div class="alert alert-{{ messageType }}">
+                <div class="col-md-12 alert alert-{{ messageType }}">
                     <p class="flash-success">{{ message }}</p>
                 </div>
             {% endfor %}

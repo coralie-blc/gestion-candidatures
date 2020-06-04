@@ -5,11 +5,10 @@
 {% block body %}
 
 {% set relance = app.user.relanceDays %}
-
-
   <button class="accordion">Ajouter une candidature.</button>
   <div class="panel">
-    <form class="row justify-content-center" action="{{ path('dashbord') }}" method="post" >
+    <form class="row justify-content-center" action="{{ path('dashbord') }}" method="post">
+        <input type="hidden" name="user_id" value="{{ app.user.id }}">
       {{ form_start(candidatureForm)}}
       <div class="col-md-8">
         {{ form_widget(candidatureForm.date) }}
@@ -130,7 +129,7 @@
   </table>
 
 
-  <div class="legende">
+  <div class="legende mt-5">
     <small>Légende:
       <ul>
         <li>

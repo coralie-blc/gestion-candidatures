@@ -19,15 +19,13 @@ class DashBordController extends AbstractController
     public function index(Request $request, CandidatureRepository $candidatureRepository)
     {
         $candidatures = $candidatureRepository->findAll();
-        // $relance = $this->getUser()->getRelanceDays();
-
-
+        $user = $this->getUser();
         $form = $this->createForm(CandidatureType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $candidature = $form->getData();
-
+            $candidature->setUser($user);
             $em = $this->getDoctrine()->getManager();
             $em->persist($candidature);
             $em->flush();
@@ -38,7 +36,6 @@ class DashBordController extends AbstractController
         return $this->render('dashbord/index.html.twig', [
             'candidatureForm' => $form->createView(),
             'candidatures' => $candidatures,
-            // 'relanceDays' => $relance
         ]);
     }
 
@@ -53,7 +50,7 @@ class DashBordController extends AbstractController
         $token = $request->request->get('token');
         $form2->handleRequest($request);
 
-        if ($this->isCsrfTokenValid('edit-candidature', $token)){
+        // if ($this->isCsrfTokenValid('edit-candidature', $token)){
 
             if ($form2->isSubmitted() && $form2->isValid()) {
                 $candidatureEdit = $form2->getData();
@@ -64,7 +61,7 @@ class DashBordController extends AbstractController
                 return $this->redirectToRoute('dashbord');
                 $this->addFlash('success', 'Modification prise en compte.');
             }
-        }
+        // }
 
         return $this->render('dashbord/edit.html.twig', [
             'candidature' => $candidature,

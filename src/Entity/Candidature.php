@@ -65,6 +65,12 @@ class Candidature
      */
     private $status;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="candidatures")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
 
     
     public function __toString()
@@ -189,6 +195,18 @@ class Candidature
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -71,11 +73,17 @@ class User implements UserInterface
      */
     private $relance;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Candidature::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $candidatures;
+
 
     public function __construct()
     {
         $this->relance = 1;
         $this->relanceDays = 15;
+        $this->candidatures = new ArrayCollection();
     }
 
 
@@ -226,6 +234,37 @@ class User implements UserInterface
     public function setRelance(bool $relance): self
     {
         $this->relance = $relance;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Candidature[]
+     */
+    public function getCandidatures(): Collection
+    {
+        return $this->candidatures;
+    }
+
+    public function addCandidature(Candidature $candidature): self
+    {
+        if (!$this->candidatures->contains($candidature)) {
+            $this->candidatures[] = $candidature;
+            $candidature->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCandidature(Candidature $candidature): self
+    {
+        if ($this->candidatures->contains($candidature)) {
+            $this->candidatures->removeElement($candidature);
+            // set the owning side to null (unless already changed)
+            if ($candidature->getUser() === $this) {
+                $candidature->setUser(null);
+            }
+        }
 
         return $this;
     }
