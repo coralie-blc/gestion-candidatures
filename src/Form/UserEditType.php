@@ -62,13 +62,22 @@ class UserEditType extends AbstractType
             'label' => 'Ville',
         ))
 
-        ->add('relanceDays', IntegerType::class, array(
-            'help' => 'Notification relance après ... jours.',
+        ->add('relance', null, array(
+            'help' => 'Relance candidature.',
             'row_attr' => ['class' => 'col-md-8'],
             'help_attr' => array(
                 'class' => 'col-md-12 mb-2'
             ),
-            'label' => 'Relance'
+            'label' => false
+        ))
+
+        ->add('relanceDays', IntegerType::class, array(
+            'help' => 'Notification relance - nombre de jours.',
+            'row_attr' => ['class' => 'col-md-8'],
+            'help_attr' => array(
+                'class' => 'col-md-12 mb-2'
+            ),
+            'label' => false
         ))
         ;
     }

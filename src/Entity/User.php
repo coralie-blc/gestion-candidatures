@@ -66,9 +66,15 @@ class User implements UserInterface
      */
     private $relanceDays;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $relance;
+
 
     public function __construct()
     {
+        $this->relance = 1;
         $this->relanceDays = 15;
     }
 
@@ -208,6 +214,18 @@ class User implements UserInterface
     public function setRelanceDays(int $relanceDays): self
     {
         $this->relanceDays = $relanceDays;
+
+        return $this;
+    }
+
+    public function getRelance(): ?bool
+    {
+        return $this->relance;
+    }
+
+    public function setRelance(bool $relance): self
+    {
+        $this->relance = $relance;
 
         return $this;
     }

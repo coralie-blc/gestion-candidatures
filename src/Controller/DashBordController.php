@@ -19,7 +19,7 @@ class DashBordController extends AbstractController
     public function index(Request $request, CandidatureRepository $candidatureRepository)
     {
         $candidatures = $candidatureRepository->findAll();
-        $relance = $this->getUser()->getRelanceDays();
+        // $relance = $this->getUser()->getRelanceDays();
 
 
         $form = $this->createForm(CandidatureType::class);
@@ -38,7 +38,7 @@ class DashBordController extends AbstractController
         return $this->render('dashbord/index.html.twig', [
             'candidatureForm' => $form->createView(),
             'candidatures' => $candidatures,
-            'relanceDays' => $relance
+            // 'relanceDays' => $relance
         ]);
     }
 

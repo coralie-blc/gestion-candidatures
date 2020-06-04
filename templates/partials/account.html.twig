@@ -35,10 +35,26 @@
           <small>Préférences de relance:</small>
         </div>
 
-        <div class="col-md-8 mt-2">
-          {{ form_widget(form.relanceDays) }}
-          {{ form_help(form.relanceDays) }}
-        </div>
+  <div class="col-md-8 mt-2">
+    {{ form_widget(form.relance) }}
+    {{ form_help(form.relance) }}
+  </div>
+
+  {% if app.user %}
+    {% if app.user.relance is same as (true) %}
+    <div class="col-md-8 mt-2">
+      {{ form_widget(form.relanceDays) }}
+      {{ form_help(form.relanceDays) }}
+    </div>
+    {% endif %}
+
+    {% if app.user.relance is same as (false) %}
+    <div class="col-md-8 mt-2 relance-off">
+      {{ form_widget(form.relanceDays) }}
+      {{ form_help(form.relanceDays) }}
+    </div>
+    {% endif %}
+  {% endif %}
 
         <div class="d-flex form-group col-md-8 justify-content-center mt-2"> 
           <button type="submit" id="btn-add-review" class="btn btn-outline-success">Modifier !</button>

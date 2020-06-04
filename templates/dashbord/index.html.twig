@@ -4,8 +4,7 @@
 
 {% block body %}
 
-{% set relance = relanceDays %}
-
+{% set relance = app.user.relanceDays %}
 
 
   <button class="accordion">Ajouter une candidature.</button>
@@ -56,7 +55,9 @@
         <th scope="col">#</th>
         <th data-field="notes" scope="col" class="negative-answer">Réponse négative</th>
         <th data-field="date" scope="col">Date</th>
-        <th data-field="relance" scope="col">Relance</th>
+        {% if app.user.relance is same as (true) %}
+          <th data-field="relance" scope="col">Relance</th>
+        {% endif %}
         <th scope="col">Poste</th>
         <th scope="col">@ / 06</th>
         <th scope="col">Contact</th>
@@ -91,24 +92,27 @@
             </form>
           </td>
           <td>{{candidature.date|date('d/m/Y')}}</td>
+          {% if app.user.relance is same as (true) %}
           <td>
+            {# RELANCE #}
             <form action="{{ path('candidature_relance', {'candidature' : candidature.id}) }}" method="post" class="row">
               <input type="hidden" name="candidature_id" value="{{ candidature.id }}">
               <input type="hidden" name="token" value="{{ csrf_token('relance-candidature') }}"/>
               <button class="btn m-auto mx-auto" type="submit" style="background-color:transparent">
-                {# Si relance faite, status = 1 #}
+                                  {# Si relance faite, status = 1 #}
                 {% if candidature.relance is same as(true) %}
-                  <img src="{{ asset('images/correct.png') }}" alt="Checked!" class="checked"/>
-                {# Si relance non faite, candidature non rejetée ET date supérieure à 10 jours #}
-                {% elseif (date(candidature.date) < date('-'~relance~'days', 'Europe/Paris') and (candidature.relance is same as (false)) and (candidature.status is not same as (3))) %}
-                  <img src="{{ asset('images/uncorrect.png') }}" alt="unchecked!" class="to-relance"/>
-                {# Si pas de relance, status = 0 #}
-                {% else %}
-                  <img src="{{ asset('images/uncorrect.png') }}" alt="unchecked!" class="checked"/>
-                {% endif %}
-              </button>                   
-            </form>
-          </td>
+                <img src="{{ asset('images/correct.png') }}" alt="Checked!" class="checked"/>
+              {# Si relance non faite, candidature non rejetée ET date supérieure à 10 jours #}
+              {% elseif (date(candidature.date) < date('-'~relance~'days', 'Europe/Paris') and (candidature.relance is same as (false)) and (candidature.status is not same as (3))) %}
+                <img src="{{ asset('images/uncorrect.png') }}" alt="unchecked!" class="to-relance"/>
+              {# Si pas de relance, status = 0 #}
+              {% else %}
+                <img src="{{ asset('images/uncorrect.png') }}" alt="unchecked!" class="checked"/>
+              {% endif %}
+            </button>                   
+          </form>
+        </td>
+        {% endif %}
           <td>{{candidature.poste}}</td>
           <td>{{candidature.contact}}</td>
           <td>{{candidature.contactName}}</td>

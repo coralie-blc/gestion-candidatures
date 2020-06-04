@@ -204,3 +204,6 @@ small {
   border: 1px green solid;
 }
 
+.relance-off {
+  opacity: 0.2;
+}
